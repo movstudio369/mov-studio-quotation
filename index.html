@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090909">
+  <title>MOV STUDIO Wedding & Proposal Quotation</title>
+  <style>
+    :root {
+      --black: #090909;
+      --ink: #161616;
+      --muted: #6b6b6b;
+      --gold: #c7a153;
+      --gold-soft: #ead9ae;
+      --line: #ddd4c0;
+      --paper: #fffdf8;
+      --panel: #151515;
+      --field: #222;
+      --white: #fff;
+      --danger: #b64d4d;
+      --radius: 8px;
+      --shadow: 0 18px 45px rgba(0, 0, 0, .22);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--white);
+      background:
+        linear-gradient(135deg, rgba(199, 161, 83, .15), transparent 28%),
+        linear-gradient(160deg, #050505 0%, #141414 52%, #080808 100%);
+      font-family: Arial, "Microsoft YaHei", "PingFang SC", sans-serif;
+      line-height: 1.55;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button, select, input[type="checkbox"], input[type="radio"] { touch-action: manipulation; }
+
+    .app-header {
+      padding: 24px clamp(16px, 4vw, 36px);
+      border-bottom: 1px solid rgba(199, 161, 83, .35);
+      background: rgba(0, 0, 0, .62);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .header-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 34px);
+      letter-spacing: 0;
+      line-height: 1.1;
+    }
+
+    .brand p {
+      margin: 5px 0 0;
+      color: var(--gold-soft);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      min-height: 42px;
+      border: 1px solid rgba(199, 161, 83, .7);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--white);
+      padding: 9px 14px;
+      cursor: pointer;
+      transition: .18s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover { background: rgba(199, 161, 83, .14); }
+    .btn.primary { background: var(--gold); border-color: var(--gold); color: #111; font-weight: 700; }
+    .btn.danger { border-color: rgba(182, 77, 77, .8); color: #ffdede; }
+
+    .layout {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px clamp(14px, 3vw, 36px) 42px;
+      display: grid;
+      grid-template-columns: minmax(360px, 1.05fr) minmax(420px, .95fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(18, 18, 18, .94);
+      border: 1px solid rgba(199, 161, 83, .25);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(199, 161, 83, .22);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .panel-head h2, .section h3 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .section {
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .section:last-child { border-bottom: 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    label {
+      display: block;
+      color: #f5ead4;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid rgba(234, 217, 174, .25);
+      background: var(--field);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 10px 11px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(199, 161, 83, .18);
+    }
+
+    textarea {
+      min-height: 118px;
+      resize: vertical;
+      white-space: pre-wrap;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    .package-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .package-option {
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid rgba(234, 217, 174, .2);
+      border-radius: var(--radius);
+      background: #1d1d1d;
+      cursor: pointer;
+    }
+
+    .package-option input { width: 18px; margin-top: 2px; }
+    .package-name { font-weight: 700; }
+    .package-includes { margin: 7px 0 0; color: #d7d7d7; font-size: 13px; }
+    .price-pill { color: #111; background: var(--gold-soft); border-radius: 999px; padding: 4px 9px; font-weight: 700; white-space: nowrap; }
+
+    .addon-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 14px;
+    }
+
+    .addon-table th, .addon-table td {
+      padding: 8px 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      vertical-align: middle;
+      text-align: left;
+    }
+
+    .addon-table th { color: var(--gold-soft); font-weight: 600; }
+    .addon-table input[type="checkbox"] { width: 18px; height: 18px; }
+    .addon-table input[type="number"] { min-width: 82px; }
+
+    .total-box {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid rgba(199, 161, 83, .5);
+      border-radius: var(--radius);
+      background: #0d0d0d;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .total-box strong { color: var(--gold-soft); font-size: 22px; }
+
+    .preview-wrap {
+      position: sticky;
+      top: 116px;
+    }
+
+    .quotation {
+      color: var(--ink);
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 32px;
+      min-height: 720px;
+      box-shadow: var(--shadow);
+    }
+
+    .q-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 3px solid var(--gold);
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+    }
+
+    .q-logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .q-sub { color: var(--muted); margin-top: 2px; }
+    .q-meta { text-align: right; font-size: 13px; color: #333; }
+
+    .q-section {
+      margin: 18px 0;
+      page-break-inside: avoid;
+    }
+
+    .q-section h3 {
+      margin: 0 0 8px;
+      color: #111;
+      font-size: 15px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 5px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 5px 12px;
+      font-size: 14px;
+    }
+
+    .info-grid .label { color: var(--muted); }
+    .preline { white-space: pre-wrap; }
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .items-table th, .items-table td {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 6px;
+      text-align: left;
+    }
+
+    .items-table th { color: #4a3a18; }
+    .amount { text-align: right !important; white-space: nowrap; }
+    .grand { font-size: 21px; font-weight: 800; color: #111; }
+
+    .signature {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 34px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .sig-line { border-bottom: 1px solid #777; height: 34px; margin-top: 18px; }
+    .footer-note { margin-top: 28px; color: var(--muted); font-size: 12px; text-align: center; }
+    .screen-only.notice { color: var(--gold-soft); font-size: 13px; margin-top: 8px; min-height: 20px; }
+
+    @media (max-width: 980px) {
+      .app-header { position: static; }
+      .header-inner, .toolbar { align-items: stretch; flex-direction: column; }
+      .toolbar { justify-content: stretch; }
+      .btn { width: 100%; }
+      .layout { grid-template-columns: 1fr; }
+      .preview-wrap { position: static; }
+      .grid { grid-template-columns: 1fr; }
+      .package-option { grid-template-columns: 22px 1fr; }
+      .price-pill { grid-column: 2; width: max-content; }
+      .q-head { flex-direction: column; }
+      .q-meta { text-align: left; }
+      .info-grid { grid-template-columns: 1fr; }
+      .addon-table { font-size: 13px; }
+      .addon-table th:nth-child(5), .addon-table td:nth-child(5) { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .app-header {
+        padding-top: max(18px, env(safe-area-inset-top));
+        padding-left: max(14px, env(safe-area-inset-left));
+        padding-right: max(14px, env(safe-area-inset-right));
+      }
+      .layout {
+        padding-left: max(10px, env(safe-area-inset-left));
+        padding-right: max(10px, env(safe-area-inset-right));
+        padding-bottom: max(32px, env(safe-area-inset-bottom));
+      }
+      input, select, textarea { font-size: 16px; }
+      .quotation { padding: 20px 16px; }
+      .section, .panel-head { padding-left: 14px; padding-right: 14px; }
+      .addon-table input[type="number"] { min-width: 70px; padding-left: 7px; padding-right: 7px; }
+      .signature { grid-template-columns: 1fr; }
+    }
+
+    @page { size: A4; margin: 12mm; }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      .app-header, .input-panel, .screen-only { display: none !important; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .preview-wrap { position: static; }
+      .quotation {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        min-height: auto;
+        background: #fff;
+        color: #111;
+      }
+      .q-head { border-bottom-color: #b89445; }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <h1>MOV STUDIO</h1>
+        <p data-i18n="tagline">Wedding & Proposal Quotation Tool</p>
+      </div>
+      <div class="toolbar">
+        <select id="language" aria-label="Language">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+        <button class="btn primary" id="newQuotationBtn" type="button">New Quotation</button>
+        <button class="btn" id="copyBtn" type="button">Copy Quotation</button>
+        <button class="btn" id="printBtn" type="button">Print / Save as PDF</button>
+        <button class="btn danger" id="resetBtn" type="button">Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel input-panel">
+      <div class="panel-head">
+        <h2 data-i18n="formTitle">报价资料</h2>
+        <span class="screen-only notice" id="saveNotice"></span>
+      </div>
+
+      <div class="section">
+        <h3 data-i18n="basicInfo">报价基本资料</h3>
+        <div class="grid">
+          <div><label for="quotationNo" data-i18n="quotationNo">报价编号</label><input id="quotationNo" type="text"></div>
+          <div><label for="quotationDate" data-i18n="quotationDate">报价日期</label><input id="quotationDate" type="date"></div>
+          <div><label for="validUntil" data-i18n="validUntil">有效期至</label><input id="validUntil" type="date"></div>
+          <div><label for="preparedBy" data-i18n="preparedBy">报价人</label><input id="preparedBy" type="text"></div>
+          <div><label for="clientName" data-i18n="clientName">客户姓名</label><input id="clientName" type="text"></div>
+          <div><label for="clientContact" data-i18n="clientContact">客户联系方式</label><input id="clientContact" type="text"></div>
+          <div><label for="projectDate" data-i18n="projectDate">拍摄日期</label><input id="projectDate" type="date"></div>
+          <div><label for="projectLocation" data-i18n="projectLocation">拍摄地点</label><input id="projectLocation" type="text"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 data-i18n="quotationType">报价类型</h3>
+        <div class="grid">
+          <div class="full">
+            <label for="typeSelect" data-i18n="quotationType">报价类型</label>
+            <select id="typeSelect">
+              <option value="wedding">Wedding Quotation｜婚礼报价</option>
+              <option value="proposal">Proposal Quotation｜求婚报价</option>
+            </select>
+          </div>
+        </div>
+        <div class="package-list" id="packageList"></div>
+      </div>
+
+      <div class="section">
+        <h3 data-i18n="addons">额外收费</h3>
+        <table class="addon-table">
+          <thead>
+            <tr>
+              <th data-i18n="use">选择</th>
+              <th data-i18n="item">项目</th>
+              <th data-i18n="qty">数量</th>
+              <th data-i18n="unitPrice">单价</th>
+              <th data-i18n="subtotal">小计</th>
+            </tr>
+          </thead>
+          <tbody id="addonBody"></tbody>
+        </table>
+        <div class="grid">
+          <div><label for="discount" data-i18n="discount">折扣</label><input id="discount" type="number" min="0" step="1"></div>
+        </div>
+        <div class="total-box">
+          <span data-i18n="grandTotal">总费用</span>
+          <strong id="grandTotalText">RM0</strong>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 data-i18n="deliverables">交付内容</h3>
+        <textarea id="deliverables"></textarea>
+      </div>
+
+      <div class="section">
+        <h3 data-i18n="remarks">备注</h3>
+        <textarea id="remarks"></textarea>
+      </div>
+
+      <div class="section">
+        <h3 data-i18n="paymentTerms">付款条款</h3>
+        <textarea id="paymentTerms"></textarea>
+      </div>
+
+      <div class="section">
+        <h3 data-i18n="terms">条款</h3>
+        <textarea id="terms"></textarea>
+      </div>
+    </section>
+
+    <section class="preview-wrap">
+      <article class="quotation" id="quotationPreview"></article>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_FORM = "movwp_currentQuotation";
+    const STORAGE_DATE = "movwp_lastQuotationDate";
+    const STORAGE_SEQ = "movwp_lastQuotationSequence";
+
+    const txt = {
+      zh: {
+        tagline: "Wedding & Proposal Quotation Tool",
+        formTitle: "报价资料",
+        basicInfo: "报价基本资料",
+        quotationNo: "报价编号",
+        quotationDate: "报价日期",
+        validUntil: "有效期至",
+        clientName: "客户姓名",
+        clientContact: "客户联系方式",
+        projectDate: "拍摄日期",
+        projectLocation: "拍摄地点",
+        preparedBy: "报价人",
+        quotationType: "报价类型",
+        package: "服务配套",
+        packagePrice: "配套价格",
+        addons: "额外收费",
+        use: "选择",
+        item: "项目",
+        qty: "数量",
+        unitPrice: "单价",
+        subtotal: "小计",
+        discount: "折扣",
+        grandTotal: "总费用",
+        deliverables: "交付内容",
+        remarks: "备注",
+        paymentTerms: "付款条款",
+        terms: "条款与细则",
+        clientProject: "客户 / 项目资料",
+        content: "报价内容",
+        noAddon: "无额外收费",
+        copied: "已复制 WhatsApp 报价内容",
+        saved: "已自动保存",
+        resetConfirm: "确定要清空当前表单资料吗？",
+        newConfirm: "Are you sure you want to start a new quotation?",
+        overwriteDeliverables: "你已手动修改交付内容，是否覆盖为新配套内容？",
+        acceptance: "客户确认",
+        acceptedBy: "Accepted by Client:",
+        name: "Name:",
+        date: "Date:",
+        signature: "Signature:",
+        footer: "This quotation is computer-generated and valid based on the stated terms.",
+        quotationTitle: "Wedding & Proposal Quotation",
+        wedding: "婚礼报价",
+        proposal: "求婚报价",
+        customAddon: "自定义额外收费",
+        customName: "自定义项目名称",
+        location: "地点",
+        selectedPackage: "选择配套"
+      },
+      en: {
+        tagline: "Wedding & Proposal Quotation Tool",
+        formTitle: "Quotation Details",
+        basicInfo: "Quotation Info",
+        quotationNo: "Quotation No.",
+        quotationDate: "Quotation Date",
+        validUntil: "Valid Until",
+        clientName: "Client Name",
+        clientContact: "Client Contact",
+        projectDate: "Project Date",
+        projectLocation: "Project Location",
+        preparedBy: "Prepared By",
+        quotationType: "Quotation Type",
+        package: "Service Package",
+        packagePrice: "Package Price",
+        addons: "Add-on / Extra Charges",
+        use: "Use",
+        item: "Item",
+        qty: "Qty",
+        unitPrice: "Unit Price",
+        subtotal: "Subtotal",
+        discount: "Discount",
+        grandTotal: "Grand Total",
+        deliverables: "Deliverables",
+        remarks: "Remarks",
+        paymentTerms: "Payment Terms",
+        terms: "Terms & Conditions",
+        clientProject: "Client / Project Info",
+        content: "Quotation Content",
+        noAddon: "No add-on charges",
+        copied: "WhatsApp quotation copied",
+        saved: "Auto saved",
+        resetConfirm: "Are you sure you want to clear the current form?",
+        newConfirm: "Are you sure you want to start a new quotation?",
+        overwriteDeliverables: "Deliverables have been edited. Overwrite with the selected package deliverables?",
+        acceptance: "Acceptance",
+        acceptedBy: "Accepted by Client:",
+        name: "Name:",
+        date: "Date:",
+        signature: "Signature:",
+        footer: "This quotation is computer-generated and valid based on the stated terms.",
+        quotationTitle: "Wedding & Proposal Quotation",
+        wedding: "Wedding Quotation",
+        proposal: "Proposal Quotation",
+        customAddon: "Custom add-on",
+        customName: "Custom item name",
+        location: "Location",
+        selectedPackage: "Selected Package"
+      }
+    };
+
+    const packages = {
+      wedding: [
+        {
+          id: "w1",
+          name: "Actual Day Morning Only",
+          price: 1588,
+          zh: ["1 位录影师", "现场收音", "早上拍摄或早上 + 下午拍摄，安排在 8 小时内", "8 小时拍摄", "1 支完整版影片", "早上版本", "婚礼道具"],
+          en: ["1 videographer", "Sound recording", "Morning only or morning + afternoon arrangement within 8 hours", "8 hours video shooting", "1 full version video", "Morning version", "Wedding props"]
+        },
+        {
+          id: "w2",
+          name: "Actual Day Full Day Standard",
+          price: 1888,
+          zh: ["1 位录影师", "现场收音", "早上 + 晚宴全日拍摄", "13 小时拍摄", "SDE 当天快剪", "2 支完整版影片 [早上版本 + 早上混合晚宴版本]"],
+          en: ["1 videographer", "Sound recording", "Full day morning + dinner", "13 hours video shooting", "SDE [same day edit]", "2 full version videos [morning version only + morning mix dinner version]"]
+        },
+        {
+          id: "w3",
+          name: "Actual Day Full Day Premiere",
+          price: 2088,
+          zh: ["1 位录影师", "Drone 航拍", "现场收音", "早上 + 晚宴全日拍摄", "13 小时拍摄", "SDE 当天快剪", "2 支完整版影片 [早上版本 + 早上混合晚宴版本]", "婚礼道具"],
+          en: ["1 videographer", "Drone shoot", "Sound recording", "Full day morning + dinner", "13 hours video shooting", "SDE [same day edit]", "2 full version videos [morning version only + morning mix dinner version]", "Wedding props"]
+        }
+      ],
+      proposal: [
+        {
+          id: "p1",
+          name: "Proposal Services P1",
+          price: 888,
+          zh: ["1 位录影师", "Drone 航拍", "5 小时拍摄", "交通", "剪辑 1 支 3-5 分钟 highlight 完整版影片", "求婚故事线设计", "免费包含：仙女棒烟花", "免费包含：求婚道具"],
+          en: ["1 videographer", "Drone shot", "5 hours shooting", "Transport", "Edit 1 highlight 3-5 minutes full version video", "Storyboard storytelling", "Free included: Sparkler fireworks", "Free included: Proposal props"]
+        },
+        {
+          id: "p2",
+          name: "Proposal Services P2",
+          price: 580,
+          zh: ["1 位录影师", "Drone 航拍", "2 小时拍摄", "交通 [仅限 KL 或 Seremban]", "剪辑 1 支 2 分钟以内 highlight 完整版影片", "免费包含：仙女棒烟花", "免费包含：求婚道具"],
+          en: ["1 videographer", "Drone shot", "2 hours shooting", "Transport [KL or Seremban only]", "Edit 1 highlight in 2 minutes full version video", "Free included: Sparkler fireworks", "Free included: Proposal props"]
+        }
+      ]
+    };
+
+    const addonTemplates = {
+      wedding: [
+        { id: "overtime", zh: "超时", en: "Overtime", qty: 1, price: 100 },
+        { id: "split", zh: "分两天拍摄", en: "Split day shooting", qty: 1, price: 250 },
+        { id: "accommodation", zh: "外地住宿", en: "Outstation accommodation", qty: 1, price: 200 },
+        { id: "holiday", zh: "公共假期额外收费", en: "Public holiday surcharge", qty: 1, price: 300 },
+        { id: "custom", zh: "自定义额外收费", en: "Custom add-on", qty: 1, price: 0, custom: true }
+      ],
+      proposal: [
+        { id: "overtime", zh: "超时", en: "Overtime", qty: 1, price: 100 },
+        { id: "accommodation", zh: "外地住宿", en: "Outstation accommodation", qty: 1, price: 200 },
+        { id: "holiday", zh: "公共假期额外收费", en: "Public holiday surcharge", qty: 1, price: 100 },
+        { id: "custom", zh: "自定义额外收费", en: "Custom add-on", qty: 1, price: 0, custom: true }
+      ]
+    };
+
+    const defaults = {
+      remarks: {
+        wedding: {
+          zh: "- 确认后需支付预约费 RM800，尾款当天拍摄完成后支付\n- 需提前 2 个星期沟通拍摄流程\n- 如分两天拍摄，额外收费 RM250\n- 晚宴拍摄工作时间至 10pm，超时 RM100 / 小时\n- 完整版影片将保留 1 年作为备份\n- 完整版影片预计约 3 个星期左右交付\n- 外地住宿费用另算 RM200\n- 影片可能会公开在各个平台作为作品展示之一\n- 公共假期额外收费 RM300\n- 公共假期包括：国庆日 / 新年 / 华人新年初一至初三",
+          en: "- RM800 booking fee is required to confirm the date. Remaining balance is payable after the shooting is completed on the actual day.\n- Project discussion should be arranged at least 2 weeks before the shooting date.\n- Split day shooting will require an additional RM250.\n- Dinner shooting working time is until 10pm. Overtime will be charged at RM100 / hour.\n- Full version video backup will be kept for 1 year.\n- Full version video will be delivered in approximately 3 weeks.\n- Outstation accommodation fee is RM200.\n- Selected project materials may be used for portfolio display on MOV STUDIO platforms.\n- Public holiday surcharge is RM300.\n- Public holidays include National Day, New Year, and Chinese New Year Day 1 to Day 3."
+        },
+        proposal: {
+          zh: "- 确认后需支付 50% 预约费，尾款当天拍摄完成后支付\n- 需提前 2 个星期沟通拍摄流程\n- 超时 RM100 / 小时\n- 成品会放入 Google Drive\n- 外地住宿费用另算 RM200\n- 影片可能会公开在各个平台作为作品展示之一\n- 公共假期额外收费 RM100\n- 公共假期包括：国庆日 / 新年 / 华人新年初一至初三",
+          en: "- 50% booking fee is required to confirm the date. Remaining balance is payable after the shooting is completed on the actual day.\n- Project discussion should be arranged at least 2 weeks before the shooting date.\n- Overtime will be charged at RM100 / hour.\n- Final video will be delivered via Google Drive.\n- Outstation accommodation fee is RM200.\n- Selected project materials may be used for portfolio display on MOV STUDIO platforms.\n- Public holiday surcharge is RM100.\n- Public holidays include National Day, New Year, and Chinese New Year Day 1 to Day 3."
+        }
+      },
+      payment: {
+        wedding: {
+          zh: "需支付 RM800 预约费以确认档期。\n尾款需在当天拍摄完成后支付。\n档期以预约费到账后为准。",
+          en: "RM800 booking fee is required to confirm the date.\nRemaining balance is payable after the shooting is completed on the actual day.\nBooking will only be confirmed after booking fee payment."
+        },
+        proposal: {
+          zh: "需支付 50% 预约费以确认档期。\n尾款需在当天拍摄完成后支付。\n档期以预约费到账后为准。",
+          en: "50% booking fee is required to confirm the date.\nRemaining balance is payable after the shooting is completed on the actual day.\nBooking will only be confirmed after booking fee payment."
+        }
+      },
+      terms: {
+        zh: "1. 此报价有效期至报价单列明日期。\n2. 拍摄档期以预约费到账后为准。\n3. 额外拍摄时间、额外地点、急件处理、特殊要求或未列明服务可能产生额外费用。\n4. Drone 航拍需视场地许可、天气和安全情况而定。\n5. 最终成品将在完成付款后交付。\n6. 影片可能会公开在各个平台作为作品展示之一，除非双方事前另有书面协议。",
+        en: "1. This quotation is valid until the stated valid date.\n2. Booking will only be confirmed after booking fee payment.\n3. Additional shooting hours, additional location, urgent delivery, special request, or unlisted service may require additional charges.\n4. Drone shooting is subject to location permission, weather condition, and safety consideration.\n5. Final deliverables will be provided after full payment is completed.\n6. Selected project materials may be used for portfolio display unless otherwise agreed in writing."
+      }
+    };
+
+    const fields = ["quotationNo", "quotationDate", "validUntil", "clientName", "clientContact", "projectDate", "projectLocation", "preparedBy", "typeSelect", "discount", "deliverables", "remarks", "paymentTerms", "terms"];
+    let state = {};
+    let deliverablesDirty = false;
+    let savingTimer = null;
+
+    const $ = (id) => document.getElementById(id);
+    const money = (n) => "RM" + Math.max(0, Number(n) || 0).toLocaleString("en-MY", { maximumFractionDigits: 0 });
+    const today = () => new Date().toISOString().slice(0, 10);
+    const ymd = (dateStr) => (dateStr || today()).replaceAll("-", "");
+    const addDays = (dateStr, days) => {
+      const d = new Date(dateStr + "T00:00:00");
+      d.setDate(d.getDate() + days);
+      return d.toISOString().slice(0, 10);
+    };
+    const escapeHtml = (str) => String(str || "").replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+
+    function getInitialState() {
+      const saved = safeParse(localStorage.getItem(STORAGE_FORM));
+      if (saved) return saved;
+      const d = today();
+      return {
+        language: "zh",
+        quotationNo: "MOVWP-" + ymd(d) + "-001",
+        quotationDate: d,
+        validUntil: addDays(d, 14),
+        clientName: "",
+        clientContact: "",
+        projectDate: "",
+        projectLocation: "",
+        preparedBy: "MOV STUDIO",
+        typeSelect: "wedding",
+        packageId: "w1",
+        discount: 0,
+        addons: freshAddons("wedding"),
+        deliverables: listToText(packages.wedding[0].zh),
+        remarks: defaults.remarks.wedding.zh,
+        paymentTerms: defaults.payment.wedding.zh,
+        terms: defaults.terms.zh
+      };
+    }
+
+    function safeParse(value) {
+      try { return value ? JSON.parse(value) : null; } catch (e) { return null; }
+    }
+
+    function freshAddons(type) {
+      return addonTemplates[type].map((a) => ({ ...a, enabled: false, name: "" }));
+    }
+
+    function listToText(items) {
+      return items.map((item) => "- " + item).join("\n");
+    }
+
+    function activeLang() { return state.language || "zh"; }
+    function activeType() { return state.typeSelect || "wedding"; }
+    function langText(key) { return txt[activeLang()][key]; }
+    function currentPackage() { return packages[activeType()].find((p) => p.id === state.packageId) || packages[activeType()][0]; }
+
+    function syncStateFromInputs() {
+      fields.forEach((id) => state[id] = $(id).value);
+      state.language = $("language").value;
+      state.discount = Number(state.discount) || 0;
+      state.addons = Array.from(document.querySelectorAll("#addonBody tr")).map((row) => ({
+        id: row.dataset.id,
+        zh: row.dataset.zh,
+        en: row.dataset.en,
+        custom: row.dataset.custom === "true",
+        enabled: row.querySelector(".addon-enabled").checked,
+        name: row.querySelector(".addon-name") ? row.querySelector(".addon-name").value : "",
+        qty: Number(row.querySelector(".addon-qty").value) || 0,
+        price: Number(row.querySelector(".addon-price").value) || 0
+      }));
+      const selected = document.querySelector("input[name='packageId']:checked");
+      if (selected) state.packageId = selected.value;
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_FORM, JSON.stringify(state));
+      clearTimeout(savingTimer);
+      $("saveNotice").textContent = langText("saved");
+      savingTimer = setTimeout(() => $("saveNotice").textContent = "", 1300);
+    }
+
+    function renderAll(skipInputValues) {
+      renderText();
+      renderPackages();
+      renderAddons();
+      if (!skipInputValues) fillInputs();
+      renderPreview();
+      saveState();
+    }
+
+    function renderText() {
+      document.documentElement.lang = activeLang() === "zh" ? "zh" : "en";
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        el.textContent = langText(el.dataset.i18n);
+      });
+      $("newQuotationBtn").textContent = activeLang() === "zh" ? "New Quotation" : "New Quotation";
+      $("copyBtn").textContent = activeLang() === "zh" ? "复制报价" : "Copy Quotation";
+      $("printBtn").textContent = activeLang() === "zh" ? "Print / Save as PDF" : "Print / Save as PDF";
+      $("resetBtn").textContent = activeLang() === "zh" ? "重设" : "Reset";
+    }
+
+    function fillInputs() {
+      fields.forEach((id) => {
+        if ($(id)) $(id).value = state[id] ?? "";
+      });
+      $("language").value = activeLang();
+    }
+
+    function renderPackages() {
+      const language = activeLang();
+      $("packageList").innerHTML = packages[activeType()].map((pkg) => `
+        <label class="package-option">
+          <input type="radio" name="packageId" value="${pkg.id}" ${pkg.id === state.packageId ? "checked" : ""}>
+          <span>
+            <span class="package-name">${escapeHtml(pkg.name)}</span>
+            <span class="package-includes">${escapeHtml(pkg[language].slice(0, 3).join(" • "))}</span>
+          </span>
+          <span class="price-pill">${money(pkg.price)}</span>
+        </label>
+      `).join("");
+    }
+
+    function renderAddons() {
+      const language = activeLang();
+      $("addonBody").innerHTML = (state.addons || freshAddons(activeType())).map((addon) => {
+        const name = addon.custom ? `<input class="addon-name" type="text" value="${escapeHtml(addon.name || "")}" placeholder="${escapeHtml(langText("customName"))}">` : escapeHtml(addon[language]);
+        return `
+          <tr data-id="${addon.id}" data-zh="${escapeHtml(addon.zh)}" data-en="${escapeHtml(addon.en)}" data-custom="${!!addon.custom}">
+            <td><input class="addon-enabled" type="checkbox" ${addon.enabled ? "checked" : ""}></td>
+            <td>${name}</td>
+            <td><input class="addon-qty" type="number" min="0" step="1" value="${Number(addon.qty) || 0}"></td>
+            <td><input class="addon-price" type="number" min="0" step="1" value="${Number(addon.price) || 0}"></td>
+            <td class="addon-subtotal">${money(addon.enabled ? (Number(addon.qty) || 0) * (Number(addon.price) || 0) : 0)}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function updateCalculatedOnly() {
+      syncStateFromInputs();
+      document.querySelectorAll("#addonBody tr").forEach((row) => {
+        const enabled = row.querySelector(".addon-enabled").checked;
+        const qty = Number(row.querySelector(".addon-qty").value) || 0;
+        const price = Number(row.querySelector(".addon-price").value) || 0;
+        row.querySelector(".addon-subtotal").textContent = money(enabled ? qty * price : 0);
+      });
+      $("grandTotalText").textContent = money(calculate().grandTotal);
+      renderPreview();
+      saveState();
+    }
+
+    function calculate() {
+      const pkg = currentPackage();
+      const addons = (state.addons || []).filter((a) => a.enabled && (Number(a.qty) || 0) * (Number(a.price) || 0) > 0);
+      const addonTotal = addons.reduce((sum, a) => sum + (Number(a.qty) || 0) * (Number(a.price) || 0), 0);
+      const discount = Math.max(0, Number(state.discount) || 0);
+      return { pkg, addons, addonTotal, discount, grandTotal: Math.max(0, pkg.price + addonTotal - discount) };
+    }
+
+    function renderPreview() {
+      const l = activeLang();
+      const t = txt[l];
+      const typeLabel = activeType() === "wedding" ? t.wedding : t.proposal;
+      const calc = calculate();
+      $("grandTotalText").textContent = money(calc.grandTotal);
+      const addonRows = calc.addons.length ? calc.addons.map((a) => `
+        <tr>
+          <td>${escapeHtml(a.custom ? a.name || t.customAddon : a[l])}</td>
+          <td>${Number(a.qty) || 0}</td>
+          <td class="amount">${money(a.price)}</td>
+          <td class="amount">${money((Number(a.qty) || 0) * (Number(a.price) || 0))}</td>
+        </tr>`).join("") : `<tr><td colspan="4">${t.noAddon}</td></tr>`;
+      const discountRow = calc.discount > 0 ? `<tr><td colspan="3">${t.discount}</td><td class="amount">-${money(calc.discount)}</td></tr>` : "";
+      $("quotationPreview").innerHTML = `
+        <div class="q-head">
+          <div>
+            <div class="q-logo">MOV STUDIO</div>
+            <div class="q-sub">${escapeHtml(t.quotationTitle)}</div>
+          </div>
+          <div class="q-meta">
+            <div><strong>${t.quotationNo}</strong> ${escapeHtml(state.quotationNo)}</div>
+            <div><strong>${t.quotationDate}</strong> ${escapeHtml(state.quotationDate)}</div>
+            <div><strong>${t.validUntil}</strong> ${escapeHtml(state.validUntil)}</div>
+          </div>
+        </div>
+
+        <div class="q-section">
+          <h3>${t.clientProject}</h3>
+          <div class="info-grid">
+            <div class="label">${t.clientName}</div><div>${escapeHtml(state.clientName)}</div>
+            <div class="label">${t.clientContact}</div><div>${escapeHtml(state.clientContact)}</div>
+            <div class="label">${t.projectDate}</div><div>${escapeHtml(state.projectDate)}</div>
+            <div class="label">${t.projectLocation}</div><div>${escapeHtml(state.projectLocation)}</div>
+            <div class="label">${t.quotationType}</div><div>${escapeHtml(typeLabel)}</div>
+            <div class="label">${t.selectedPackage}</div><div>${escapeHtml(calc.pkg.name)}</div>
+            <div class="label">${t.preparedBy}</div><div>${escapeHtml(state.preparedBy)}</div>
+          </div>
+        </div>
+
+        <div class="q-section">
+          <h3>${t.deliverables}</h3>
+          <div class="preline">${escapeHtml(state.deliverables)}</div>
+        </div>
+
+        <div class="q-section">
+          <h3>${t.content}</h3>
+          <table class="items-table">
+            <thead><tr><th>${t.item}</th><th>${t.qty}</th><th class="amount">${t.unitPrice}</th><th class="amount">${t.subtotal}</th></tr></thead>
+            <tbody>
+              <tr><td>${escapeHtml(calc.pkg.name)}</td><td>1</td><td class="amount">${money(calc.pkg.price)}</td><td class="amount">${money(calc.pkg.price)}</td></tr>
+              ${addonRows}
+              ${discountRow}
+              <tr><td colspan="3" class="grand">${t.grandTotal}</td><td class="amount grand">${money(calc.grandTotal)}</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="q-section">
+          <h3>${t.remarks}</h3>
+          <div class="preline">${escapeHtml(state.remarks)}</div>
+        </div>
+        <div class="q-section">
+          <h3>${t.paymentTerms}</h3>
+          <div class="preline">${escapeHtml(state.paymentTerms)}</div>
+        </div>
+        <div class="q-section">
+          <h3>${t.terms}</h3>
+          <div class="preline">${escapeHtml(state.terms)}</div>
+        </div>
+        <div class="q-section">
+          <h3>${t.acceptance}</h3>
+          <div>${t.acceptedBy}</div>
+          <div class="signature">
+            <div>${t.name}<div class="sig-line"></div></div>
+            <div>${t.date}<div class="sig-line"></div></div>
+            <div>${t.signature}<div class="sig-line"></div></div>
+          </div>
+        </div>
+        <div class="footer-note">MOV STUDIO · ${t.footer}</div>
+      `;
+    }
+
+    function resetEditableDefaults(keepNumber) {
+      const d = today();
+      state.quotationNo = keepNumber ? state.quotationNo : "MOVWP-" + ymd(d) + "-001";
+      state.quotationDate = d;
+      state.validUntil = addDays(d, 14);
+      state.clientName = "";
+      state.clientContact = "";
+      state.projectDate = "";
+      state.projectLocation = "";
+      state.preparedBy = "MOV STUDIO";
+      state.discount = 0;
+      state.addons = freshAddons(activeType());
+      state.packageId = packages[activeType()][0].id;
+      applyDefaultTexts(true);
+      deliverablesDirty = false;
+    }
+
+    function applyDefaultTexts(includeDeliverables) {
+      const l = activeLang();
+      const type = activeType();
+      if (includeDeliverables) state.deliverables = listToText(currentPackage()[l]);
+      state.remarks = defaults.remarks[type][l];
+      state.paymentTerms = defaults.payment[type][l];
+      state.terms = defaults.terms[l];
+    }
+
+    function generateNextQuotationNo() {
+      const d = today();
+      const storedDate = localStorage.getItem(STORAGE_DATE);
+      const currentSeq = Number(localStorage.getItem(STORAGE_SEQ)) || 0;
+      const nextSeq = storedDate === d ? currentSeq + 1 : 1;
+      localStorage.setItem(STORAGE_DATE, d);
+      localStorage.setItem(STORAGE_SEQ, String(nextSeq));
+      return "MOVWP-" + ymd(d) + "-" + String(nextSeq).padStart(3, "0");
+    }
+
+    function showNotice(message, duration = 1600) {
+      $("saveNotice").textContent = message;
+      setTimeout(() => $("saveNotice").textContent = "", duration);
+    }
+
+    function legacyCopy(text) {
+      const area = document.createElement("textarea");
+      area.value = text;
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.top = "0";
+      area.style.left = "-9999px";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.focus();
+      area.select();
+      area.setSelectionRange(0, area.value.length);
+      let copied = false;
+      try { copied = document.execCommand("copy"); } catch (error) { copied = false; }
+      area.remove();
+      return copied;
+    }
+
+    async function copyQuotation() {
+      syncStateFromInputs();
+      const l = activeLang();
+      const t = txt[l];
+      const calc = calculate();
+      const typeLabel = activeType() === "wedding" ? t.wedding : t.proposal;
+      const addons = calc.addons.length
+        ? calc.addons.map((a) => `- ${a.custom ? a.name || t.customAddon : a[l]} x ${a.qty}: ${money((Number(a.qty) || 0) * (Number(a.price) || 0))}`).join("\n")
+        : t.noAddon;
+      const discount = calc.discount > 0 ? `${t.discount}: -${money(calc.discount)}\n` : "";
+      const message = [
+        "MOV STUDIO",
+        `${t.quotationNo}: ${state.quotationNo}`,
+        `${t.clientName}: ${state.clientName}`,
+        `${t.projectDate}: ${state.projectDate}`,
+        `${t.location}: ${state.projectLocation}`,
+        `${t.quotationType}: ${typeLabel}`,
+        `${t.selectedPackage}: ${calc.pkg.name} (${money(calc.pkg.price)})`,
+        "",
+        `${t.deliverables}:`,
+        state.deliverables,
+        "",
+        `${t.addons}:`,
+        addons,
+        "",
+        discount + `${t.grandTotal}: ${money(calc.grandTotal)}`,
+        "",
+        `${t.paymentTerms}:`,
+        state.paymentTerms,
+        "",
+        `${t.remarks}:`,
+        state.remarks
+      ].join("\n");
+
+      try {
+        if (!navigator.clipboard || !window.isSecureContext) throw new Error("Clipboard API unavailable");
+        await navigator.clipboard.writeText(message);
+        showNotice(t.copied);
+      } catch (error) {
+        if (legacyCopy(message)) {
+          showNotice(t.copied);
+        } else {
+          window.prompt(l === "zh" ? "请长按并复制以下报价内容：" : "Press and hold to copy the quotation:", message);
+        }
+      }
+    }
+
+    function printQuotation() {
+      syncStateFromInputs();
+      renderPreview();
+      saveState();
+      requestAnimationFrame(() => setTimeout(() => window.print(), 80));
+    }
+
+    function handleTypeChange() {
+      syncStateFromInputs();
+      state.typeSelect = $("typeSelect").value;
+      state.packageId = packages[activeType()][0].id;
+      state.addons = freshAddons(activeType());
+      applyDefaultTexts(true);
+      deliverablesDirty = false;
+      renderAll();
+    }
+
+    function handlePackageChange(value) {
+      syncStateFromInputs();
+      const oldPackageId = state.packageId;
+      state.packageId = value;
+      if (deliverablesDirty && oldPackageId !== value && !confirm(langText("overwriteDeliverables"))) {
+        state.packageId = oldPackageId;
+      } else {
+        state.deliverables = listToText(currentPackage()[activeLang()]);
+        deliverablesDirty = false;
+      }
+      renderAll();
+    }
+
+    function handleLanguageChange() {
+      syncStateFromInputs();
+      const newLang = $("language").value;
+      state.language = newLang;
+      state.remarks = defaults.remarks[activeType()][newLang];
+      state.paymentTerms = defaults.payment[activeType()][newLang];
+      state.terms = defaults.terms[newLang];
+      if (!deliverablesDirty) state.deliverables = listToText(currentPackage()[newLang]);
+      renderAll();
+    }
+
+    function initEvents() {
+      $("language").addEventListener("change", handleLanguageChange);
+      $("typeSelect").addEventListener("change", handleTypeChange);
+      $("quotationDate").addEventListener("change", () => {
+        $("validUntil").value = addDays($("quotationDate").value, 14);
+        updateCalculatedOnly();
+      });
+      $("deliverables").addEventListener("input", () => { deliverablesDirty = true; updateCalculatedOnly(); });
+      $("packageList").addEventListener("change", (event) => {
+        if (event.target.name === "packageId") handlePackageChange(event.target.value);
+      });
+      $("addonBody").addEventListener("input", updateCalculatedOnly);
+      $("addonBody").addEventListener("change", updateCalculatedOnly);
+      fields.filter((id) => id !== "typeSelect" && id !== "quotationDate" && id !== "deliverables").forEach((id) => {
+        $(id).addEventListener("input", updateCalculatedOnly);
+      });
+      $("copyBtn").addEventListener("click", copyQuotation);
+      $("printBtn").addEventListener("click", printQuotation);
+      $("resetBtn").addEventListener("click", () => {
+        if (!confirm(langText("resetConfirm"))) return;
+        resetEditableDefaults(true);
+        localStorage.setItem(STORAGE_FORM, JSON.stringify(state));
+        renderAll();
+      });
+      $("newQuotationBtn").addEventListener("click", () => {
+        if (!confirm(langText("newConfirm"))) return;
+        const no = generateNextQuotationNo();
+        resetEditableDefaults(false);
+        state.quotationNo = no;
+        localStorage.setItem(STORAGE_FORM, JSON.stringify(state));
+        renderAll();
+      });
+    }
+
+    state = getInitialState();
+    if (!state.addons) state.addons = freshAddons(activeType());
+    initEvents();
+    renderAll();
+  </script>
+</body>
+</html>
